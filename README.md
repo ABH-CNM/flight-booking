@@ -42,5 +42,5 @@ $ npm install
   ```
   
 ## License:
-Public domain
+  Public domain
 
