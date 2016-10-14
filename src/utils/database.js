@@ -48,7 +48,7 @@ function getDb() {
 // drop database
 // after completed a test, you need destroy test database to avoiding conflict
 function drop(done) {
-  if (!state.db) {
+  if (!isConnected()) {
     return done(new Error("Missing database connection!"));
   }
 
@@ -58,7 +58,7 @@ function drop(done) {
 // add collection to database from fixture (json file contain test data)
 // userful for testing
 function fixture(collection, done) {
-  if (!state.db) {
+  if (!isConnected()) {
     return done(new Error("Missing database connection!"));
   }
 
