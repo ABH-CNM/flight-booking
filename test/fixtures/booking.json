@@ -1,0 +1,11 @@
+module.exports = {
+  "name": "booking",
+  "documents": [
+    {
+      "id": "ABCXYZ",
+      "time": "2016-05-01 10:00:00",
+      "cost": 400000,
+      "state": 1
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+module.exports = {
+  "name": "flight-detail",
+  "documents": [
+    {
+      "book_id": "ABCXYZ",
+      "flight_id": "BL326",
+      "date": "2016-10-05",
+      "class": "Y",
+      "price": "E"
+    },
+    {
+      "book_id": "ABCXYZ",
+      "flight_id": "BL327",
+      "date": "2016-10-06",
+      "class": "Y",
+      "price": "E"
+    }    
+  ]
+};

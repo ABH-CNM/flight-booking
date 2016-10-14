@@ -1,0 +1,49 @@
+module.exports = {
+  "name": "flight",
+  "documents": [
+    {
+      "id": "BL326",
+      "departure": "SGN",
+      "arrival": "TBB",
+      "date": "2016-10-05",
+      "hours": "08:45",
+      "class": "Y",
+      "price": "E",
+      "seats_amount": 100,
+      "cost": 100000
+    },
+    {
+      "id": "BL326",
+      "departure": "SGN",
+      "arrival": "TBB",
+      "date": "2016-10-05",
+      "hours": "08:45",
+      "class": "Y",
+      "price": "F",
+      "seats_amount": 20,
+      "cost": 10000
+    },
+    {
+      "id": "BL326",
+      "departure": "SGN",
+      "arrival": "TBB",
+      "date": "2016-10-05",
+      "hours": "08:45",
+      "class": "C",
+      "price": "G",
+      "seats_amount": 10,
+      "cost": 500000
+    },
+    {
+      "id": "BL327",
+      "departure": "TBB",
+      "arrival": "SGN",
+      "date": "2016-10-06",
+      "hours": "10:30",
+      "class": "Y",
+      "price": "E",
+      "seats_amount": 100,
+      "cost": 100000    
+    }
+  ]
+}

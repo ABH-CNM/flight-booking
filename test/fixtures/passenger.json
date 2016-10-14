@@ -1,0 +1,17 @@
+module.exports = {
+  "name": "passenger",
+  "documents": [
+    {
+      "booking_id": "ABCXYZ",
+      "title": "MR",
+      "last_name": "NGUYEN",
+      "first_name": "VAN A"
+    },
+    {
+      "booking_id": "ABCXYZ",
+      "title": "MR",
+      "last_name": "TRAN",
+      "first_name": "THI B"    
+    }
+  ]
+}
