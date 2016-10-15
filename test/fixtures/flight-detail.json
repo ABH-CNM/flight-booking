@@ -1,4 +1,4 @@
-module.exports = {
+{
   "name": "flight-detail",
   "documents": [
     {
@@ -16,4 +16,4 @@ module.exports = {
       "price": "E"
     }    
   ]
-};
+}

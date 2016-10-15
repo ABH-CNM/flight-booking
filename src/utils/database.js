@@ -1,4 +1,5 @@
-// for more information about database configuration for testing, visit https://www.terlici.com/2014/09/15/node-testing.html
+// for more information about database configuration for testing,
+// visit https://www.terlici.com/2014/09/15/node-testing.html
 
 var MongoClient = require('mongodb').MongoClient,
     config = require('../config.js');
@@ -52,7 +53,9 @@ function drop(done) {
     return done(new Error("Missing database connection!"));
   }
 
-  db.dropDatabase();
+  state.db.dropDatabase(function(err) {
+    done();
+  });
 }
 
 // add collection to database from fixture (json file contain test data)
@@ -64,9 +67,9 @@ function fixture(collection, done) {
 
   var collectionName = collection.name;
   var documents = collection.documents;
-  db.collection(collectionName).insertMany(documents, function(err, result) {
+  state.db.collection(collectionName).insertMany(documents, function(err, result) {
     if (!err) {
-      done(result);
+      done();
     } else {
       done(err);
     }
