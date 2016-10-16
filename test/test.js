@@ -43,7 +43,7 @@ describe("Flight Booking Test", function() {
   });
 
   // tạo đặt chỗ mới
-  it("POST booking/create", function(done) {
+  it("PUT booking/create", function(done) {
     booking.createBooking(function(err) {
       done(err);
     });
