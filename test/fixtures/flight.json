@@ -2,7 +2,7 @@
   "name": "flight",
   "documents": [
     {
-      "id": "BL326",
+      "flight_id": "BL326",
       "departure": "SGN",
       "arrival": "TBB",
       "date": "2016-10-05",
@@ -13,7 +13,7 @@
       "cost": 100000
     },
     {
-      "id": "BL326",
+      "flight_id": "BL326",
       "departure": "SGN",
       "arrival": "TBB",
       "date": "2016-10-05",
@@ -24,7 +24,7 @@
       "cost": 10000
     },
     {
-      "id": "BL326",
+      "flight_id": "BL326",
       "departure": "SGN",
       "arrival": "TBB",
       "date": "2016-10-05",
@@ -35,7 +35,7 @@
       "cost": 500000
     },
     {
-      "id": "BL327",
+      "flight_id": "BL327",
       "departure": "TBB",
       "arrival": "SGN",
       "date": "2016-10-06",

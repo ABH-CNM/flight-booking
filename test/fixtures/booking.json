@@ -2,10 +2,36 @@
   "name": "booking",
   "documents": [
     {
-      "id": "ABCXYZ",
+      "booking_id": "ABCXYZ",
       "time": "2016-05-01 10:00:00",
       "cost": 400000,
-      "state": 1
+      "status": 1,
+      "flight_details": [
+        {
+          "flight_id": "BL326",
+          "date": "2016-10-05",
+          "class": "Y",
+          "price": "E"
+        },
+        {
+          "flight_id": "BL327",
+          "date": "2016-10-06",
+          "class": "Y",
+          "price": "E"
+        }
+      ],
+      "passengers": [
+        {
+          "title": "MR",
+          "last_name": "NGUYEN",
+          "first_name": "VAN A"
+        },
+        {
+          "title": "MR",
+          "last_name": "TRAN",
+          "first_name": "THI B"    
+        }        
+      ]
     }
   ]
 }
