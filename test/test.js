@@ -5,7 +5,7 @@ var expect = require('chai').expect,
     bookingData = require('./fixtures/booking.json'),
     flightData = require('./fixtures/flight.json');
 
-describe("Airport departure and arrival", function() {
+describe("Flight Booking Test", function() {
   before(function(done) {
     database.connect(database.MODE_TEST, done);
   });
