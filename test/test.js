@@ -1,9 +1,12 @@
 var expect = require('chai').expect,
+    request = require('request'),
     database = require('../src/utils/database'),
     flight = require('../src/models/flight')(),
     booking = require('../src/models/booking')(),
     bookingData = require('./fixtures/booking.json'),
     flightData = require('./fixtures/flight.json');
+
+const URL = 'http://localhost:3000';
 
 describe("Flight Booking Test", function() {
   before(function(done) {
@@ -26,96 +29,139 @@ describe("Flight Booking Test", function() {
   });
 
   // mã sân bay đi ...
-  it("GET flights/departures/all", function(done) {
-    flight.getAirportDepartures(function(err, departs) {
-      expect(departs).to.deep.equal(['SGN', 'TBB']);
+  it("GET /flights/departures/all", function(done) {
+    request.get(URL + '/flights/departures/all', function(err, response, body) {
+      expect(JSON.parse(body)).to.deep.equal(['SGN', 'TBB']);
       done();
     });
   });
 
   // mã sân bay đến...
-  it("GET flights/arrivals?departure_id=...", function(done) {
-    var departId = 'SGN';
-    flight.getAirportArrivals(departId, function(err, arrivals) {
-      expect(arrivals).to.deep.equal(['TBB']);
+  it("GET /flights/arrivals?departure=[string]", function(done) {
+    var departureId = 'SGN';
+    request.get(URL + '/flights/arrivals?departure=' + departureId, function(err, response, body) {
+      expect(JSON.parse(body)).to.deep.equal(['TBB']);
       done();      
     });
   });
 
+    // tìm chuyến bay ..
+  it("GET /flights/available?departure=[string]&arrival=[string]&date=[string]&seats_amount=[integer]", function(done) {
+    var depart = 'SGN';
+    var arrive = 'TBB';
+    var date = '2016-10-05';
+    var amount = 100;
+    request(
+      {
+        url: URL + '/flights/available',
+        method: 'GET',
+        qs: {
+          departure: depart,
+          arrival: arrive,
+          date: date,
+          seats_amount: amount
+        },
+      },
+      function(err, response, body) {
+        done();
+      }
+    );
+  });
+
   // tạo đặt chỗ mới
-  it("PUT booking/create", function(done) {
-    booking.createBooking(function(err) {
-      done(err);
+  it("PUT /booking/create", function(done) {
+    request.put(URL + '/booking/create', function(err, response, body) {
+      expect(JSON.parse(body)).to.not.null;
+      done();
     });
   });
 
   // thông tin mã đặt chỗ
-  it("GET booking/:booking_id", function(done) {
+  it("GET /booking/:booking_id", function(done) {
     var bookingId = 'ABCXYZ';
-    booking.getBookingInfo(bookingId, function(err, bookingInfo) {
-      expect(bookingInfo).to.deep.equal(bookingData.documents[0]);
+    request.get(URL + '/booking/' + bookingId, function(err, response, body) {
+      expect(JSON.parse(body).booking_id).to.equal(bookingId);
       done();
     });
   });
 
   // cập nhật trạng thái...
-  it("POST booking/:booking_id/update_status", function(done) {
+  it("POST /booking/:booking_id/update_status/:status", function(done) {
     var bookingId = 'ABCXYZ';
     var status = 0;
-    booking.updateBookingStatus(bookingId, status, function(err, result) {
+    request.post(URL + '/booking/' + bookingId + '/update_status/' + status, function(err, response, body) {
+      console.log(body);
       done();
     });
   });
 
-  // danh sách chặng bay
-  it("GET booking/flight_details", function(done) {
-    booking.getFlightDetails(function() {
+  // danh sách chặng bay theo mã đặt chỗ
+  it("GET /booking/:booking_id/flight_details", function(done) {
+    var bookingId = 'ABCXYZ';
+    request.get(URL + '/booking/' + bookingId + '/flight_details', function(err, response, body) {
+      expect(JSON.parse(body)).to.deep.equal(bookingData.documents[0].flight_details);
       done();
     });
+  });
+
+  // thêm chặng bay mới
+  it("POST /booking/:booking_id/add_flight_detail", function(done) {
+    var bookingId = 'ABCXYZ';
+    request(
+      {
+        url: URL + '/booking/' + bookingId + '/add_flight_detail',
+        method: 'POST',
+        json: {
+          flight_id: 'BL326',
+          date: '2016-10-05',
+          class: 'C',
+          price: 'G'
+        }
+      },
+      function(error, response, body){
+        console.log(body);
+        done();
+      }
+    );    
   });
 
   // hành khách đi trên 1 chuyến bay nào đó
-  it("GET booking/passengers?flight_id=...", function(done) {
+  it("GET /flights/:flight_id/passengers/", function(done) {
     var flightId = 'BL326';
-    booking.getPassentersInFlight(flightId, function(err, passengers) {
-      expect(passengers).to.deep.equal(bookingData.documents[0].passengers);
+    request.get(URL + '/flights/' + flightId + '/passengers', function(err, response, body) {
+      expect(JSON.parse(body)).to.deep.equal(bookingData.documents[0].passengers);
       done();
     });
   });
 
   // danh sách tất cả hành khách
-  it("GET booking/passengers/all", function(done) {
-    booking.getAllPassengers(function(err, passengers) {
-      expect(passengers).to.deep.equal(bookingData.documents[0].passengers);
+  it("GET /passengers/all", function(done) {
+    request.get(URL + '/passengers/all', function(err, response, body) {
+      expect(JSON.parse(body)).to.deep.equal(bookingData.documents[0].passengers);
       done();      
     });
   });
 
-  // tìm chuyến bay ..
-  it("GET flight?departure=...&arrival...=&date...=&seats_amount=...", function(done) {
-    var depart = 'SGN';
-    var arrive = 'TBB';
-    var date = '2016-10-05';
-    var amount = 100;
-    flight.findFlights(depart, arrive, date, amount, function(err, flights) {
-      console.log(flights);
-      done();
-    });
-  });
-
   // thêm mới hành khách
-  it("PUT booking/passengers/create", function(done) {
+  it("POST /passengers/create", function(done) {
     var bookingId = 'ABCXYZ';
     var passenger = {
       title: 'ms',
       last_name: 'nguyen',
       first_name: 'luom'
     };
-    booking.addNewPassenger(bookingId, passenger, function(err, result) {
-      done();
-    });
+    request(
+      {
+        url: URL + '/passengers/create',
+        method: 'POST',
+        json: {
+          bookingId: bookingId,
+          passenger: passenger
+        }
+      },
+      function(error, response, body){
+        done();
+      }
+    );
   });
-
-
-
- });
+});
