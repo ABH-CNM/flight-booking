@@ -29,6 +29,7 @@ describe("Flight Booking Test", function() {
   });
 
   // mã sân bay đi ...
+  ///chọn điểm đi ???
   it("GET /flights/departures/all", function(done) {
     request.get(URL + '/flights/departures/all', function(err, response, body) {
       //printResult(body);
@@ -37,15 +38,18 @@ describe("Flight Booking Test", function() {
   });
 
   // mã sân bay đến...
+  //hiển thị danh sách điểm đến ???
   it("GET /flights/arrivals?departure=[string]", function(done) {
     var departureId = 'SGN';
     request.get(URL + '/flights/arrivals?departure=' + departureId, function(err, response, body) {
-      //printResult(body);
+      printResult(body);
       done();      
     });
   });
 
     // tìm chuyến bay ..
+    // Tìm vé máy bay thỏa mã số lượng hành khách với ngày đi và ngày về theo yêu cầu.
+    //Nếu không có trả về lỗi hết vé.
   it("GET /flights/available?departure=[string]&arrival=[string]&date=[string]&seats_amount=[integer]", function(done) {
     var depart = 'SGN';
     var arrive = 'TBB';
@@ -70,6 +74,7 @@ describe("Flight Booking Test", function() {
   });
 
   // tạo đặt chỗ mới
+  //Chọn ngày đi, ngày về (nếu có), số lượng hành khách, hạng vé (Y hoặc C)
   it("PUT /booking/create", function(done) {
     request.put(URL + '/booking/create', function(err, response, body) {
       //printResult(body);
