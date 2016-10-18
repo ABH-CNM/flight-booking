@@ -1,4 +1,4 @@
-# Flight booking API Doc
+# Flight booking API Docs
 ## Danh sách mã sân bay đi
 Trả về các mã sân bay đi có trong CSDL
 * URL: `/flights/departures/all`
