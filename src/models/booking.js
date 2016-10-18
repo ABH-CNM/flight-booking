@@ -22,6 +22,9 @@ function booking() {
         booking_id: bookingId,
         status: bookingStatus,
         time: bookingDate,
+        cost: 0,
+        flight_details: [],
+        passengers: [],
       };
       
       var bookingCollection = database.getDb().collection(BOOKING_COLLECTION);
