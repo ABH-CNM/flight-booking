@@ -4,9 +4,15 @@ var database = require('../utils/database'),
 const BOOKING_COLLECTION = 'booking'
 const BOOKING_STATUS_PENDING = 0;
 const BOOK_STATUS_APPROVED = 1;
+const NOT_FOUND = 'resource not found';
+const UPDATED = 'updated';
 
 function booking() {
   return {
+    NOT_FOUND,
+    UPDATED,
+    BOOKING_STATUS_PENDING,
+    BOOK_STATUS_APPROVED,
     createBooking: function(callback) {
       var bookingId = generateBookingId();
       var bookingStatus = BOOKING_STATUS_PENDING;
@@ -26,7 +32,13 @@ function booking() {
 
     findBookingInfo: function(bookingId, callback) {
       var db = database.getDb();
-      db.collection(BOOKING_COLLECTION).findOne({ booking_id: bookingId }, callback);
+      db.collection(BOOKING_COLLECTION).findOne({ booking_id: bookingId }, function(err, booking) {
+        if (booking !== null) {
+          callback(err, booking);
+        } else {
+          callback(err, NOT_FOUND);
+        }
+      });
     },
 
     updateBookingStatus: function(bookingId, status, callback) {
@@ -34,7 +46,13 @@ function booking() {
       db.collection(BOOKING_COLLECTION).update(
         { booking_id: bookingId },
         { $set: { status: status } },
-        callback
+        function(err, result) {
+          if (result.toJSON().nModified > 0) {
+            callback(err, UPDATED);
+          } else {
+            callback(err, NOT_FOUND);
+          }
+        }
       );
     },
 
@@ -43,13 +61,17 @@ function booking() {
       db.collection(BOOKING_COLLECTION)
         .find({ 'flight_details.flight_id': { $eq: flightId } })
         .toArray(function(err, bookings) {
-          var passengers = [];
-          for (var i = 0; i < bookings.length; i++) {
-            var booking = bookings[i];
-            var passengersPerBooking = booking.passengers;
-            passengers = passengers.concat(passengersPerBooking);
+          if (bookings.length > 0) {
+            var passengers = [];
+            for (var i = 0; i < bookings.length; i++) {
+              var booking = bookings[i];
+              var passengersPerBooking = booking.passengers;
+              passengers = passengers.concat(passengersPerBooking);
+            }
+            callback(err, passengers);            
+          } else {
+            callback(err, NOT_FOUND);
           }
-          callback(err, passengers);
         });
     },
 
@@ -73,15 +95,25 @@ function booking() {
       db.collection(BOOKING_COLLECTION).updateOne(
         { booking_id: bookingId },
         { $push: { passengers: passenger } },
-        callback
+        function(err, result) {
+          if (result.toJSON().nModified > 0) {
+            callback(err, UPDATED);
+          } else {
+            callback(err, NOT_FOUND);
+          }
+        }
       );
     },
 
     findFlightDetails: function(bookingId, callback) {
       var db = database.getDb();
       db.collection(BOOKING_COLLECTION).findOne({ booking_id: bookingId }, function(err, booking) {
-        var flightDetails = booking.flight_details;
-        callback(err, flightDetails);
+        if (booking !== null) {
+          var flightDetails = booking.flight_details;
+          callback(err, flightDetails);            
+        } else {
+          callback(err, NOT_FOUND);
+        }
       });
     },
 
@@ -90,7 +122,13 @@ function booking() {
       db.collection(BOOKING_COLLECTION).updateOne(
         { booking_id: bookingId },
         { $push: { flight_details: flightDetail } },
-        callback
+        function(err, result) {
+          if (result.toJSON().nModified > 0) {
+            callback(err, UPDATED);
+          } else {
+            callback(err, NOT_FOUND);
+          }
+        }
       );      
     },
   };
