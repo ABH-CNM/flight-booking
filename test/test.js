@@ -31,7 +31,7 @@ describe("Flight Booking Test", function() {
   // mã sân bay đi ...
   it("GET /flights/departures/all", function(done) {
     request.get(URL + '/flights/departures/all', function(err, response, body) {
-      //console.log(body);
+      //printResult(body);
       done();
     });
   });
@@ -40,7 +40,7 @@ describe("Flight Booking Test", function() {
   it("GET /flights/arrivals?departure=[string]", function(done) {
     var departureId = 'SGN';
     request.get(URL + '/flights/arrivals?departure=' + departureId, function(err, response, body) {
-      //console.log(body);
+      //printResult(body);
       done();      
     });
   });
@@ -63,7 +63,7 @@ describe("Flight Booking Test", function() {
         },
       },
       function(err, response, body) {
-        //console.log(body);
+        //printResult(body);
         done();
       }
     );
@@ -72,7 +72,7 @@ describe("Flight Booking Test", function() {
   // tạo đặt chỗ mới
   it("PUT /booking/create", function(done) {
     request.put(URL + '/booking/create', function(err, response, body) {
-      //console.log(body);
+      //printResult(body);
       done();
     });
   });
@@ -81,7 +81,7 @@ describe("Flight Booking Test", function() {
   it("GET /booking/:booking_id", function(done) {
     var bookingId = 'ABCXYZ';
     request.get(URL + '/booking/' + bookingId, function(err, response, body) {
-      //console.log(body);
+      //printResult(body);
       done();
     });
   });
@@ -91,7 +91,7 @@ describe("Flight Booking Test", function() {
     var bookingId = 'ABCXYZ';
     var status = 0;
     request.post(URL + '/booking/' + bookingId + '/update_status/' + status, function(err, response, body) {
-      //console.log(body);
+      //printResult(body);
       done();
     });
   });
@@ -100,7 +100,7 @@ describe("Flight Booking Test", function() {
   it("GET /booking/:booking_id/flight_details", function(done) {
     var bookingId = 'ABCXYZ';
     request.get(URL + '/booking/' + bookingId + '/flight_details', function(err, response, body) {
-      //console.log(body);
+      //printResult(body);
       done();
     });
   });
@@ -119,8 +119,8 @@ describe("Flight Booking Test", function() {
           price: 'G'
         }
       },
-      function(error, response, body){
-        //console.log(body);
+      function(error, response, body) {
+        //console.log(JSON.stringify(body, null, 2));
         done();
       }
     );    
@@ -130,7 +130,7 @@ describe("Flight Booking Test", function() {
   it("GET /flights/:flight_id/passengers/", function(done) {
     var flightId = 'BL326';
     request.get(URL + '/flights/' + flightId + '/passengers', function(err, response, body) {
-      //console.log(body);
+      //printResult(body);
       done();
     });
   });
@@ -138,7 +138,7 @@ describe("Flight Booking Test", function() {
   // danh sách tất cả hành khách
   it("GET /passengers/all", function(done) {
     request.get(URL + '/passengers/all', function(err, response, body) {
-      //console.log(body);
+      //printResult(body);
       done();      
     });
   });
@@ -161,9 +161,13 @@ describe("Flight Booking Test", function() {
         }
       },
       function(error, response, body) {
-        //console.log(body);
+        //console.log(JSON.stringify(body, null, 2));
         done();
       }
     );
   });
 });
+
+function printResult(result) {
+  console.log(JSON.stringify(JSON.parse(result), null, 2));
+}
