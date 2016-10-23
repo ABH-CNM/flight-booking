@@ -74,6 +74,8 @@ router.post('/booking/:booking_id/add_flight_detail', function(req, res) {
     price: req.body.price    
   };
 
+  console.log(flightDetail);
+
   flight.findFlightById(flightDetail.flight_id, function(err, flightResult) {
     if (!err) {
       if (flightResult !== flight.NOT_FOUND) {

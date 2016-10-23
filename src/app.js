@@ -20,7 +20,7 @@ function launch() {
   var arg = process.argv[2];
   if (isProduction(arg)) {
     database.connect(database.MODE_PRODUCTION, function(err) {
-      if (!err) {
+      if (!err) {      
         setupRoute(app);
         app.listen(app.get('port'));
         console.log("Server is listening on port", app.get('port'));
