@@ -29,6 +29,7 @@ function booking() {
       
       var bookingCollection = database.getDb().collection(BOOKING_COLLECTION);
       bookingCollection.insertOne(bookingDoc, function(err, result) {
+        console.log(result.toJSON())
         callback(err, bookingDoc);
       });
     },
