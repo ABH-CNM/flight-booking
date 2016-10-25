@@ -62,13 +62,8 @@ mApp.config(function($routeProvider) {
 
 // our controller for the form
 // =============================================================================
-<<<<<<< HEAD
 mApp.controller('formController', function($scope, $http) {
     var url = 'http://localhost:3000/flights/departures/all';
-=======
-.controller('formController', function($scope, $http) {
-    var url = '/flights/departures/all';
->>>>>>> 9201e044dd66758e07413a11580a2b9e264737c2
     $scope.flights =[];
     $scope.bookings = [];
     $scope.bookingId;
@@ -85,7 +80,7 @@ mApp.controller('formController', function($scope, $http) {
     $scope.loadArrivals = function(){
         $http({
         method: "GET",
-        url: '/flights/arrivals?departure=' + $scope.formData.xuatphat
+        url: 'http://localhost:3000/flights/arrivals?departure=' + $scope.formData.xuatphat
         }).then(function mySucces(response) {
             $scope.dd = response.data.data.arrivals;
         }, function myError(response) {
@@ -106,7 +101,7 @@ mApp.controller('formController', function($scope, $http) {
         var date = $scope.formData.ngaydi.getFullYear()+'-'+ month +'-'+ day;
         $http({
             method: "GET",
-            url: '/flights/available?departure=' + $scope.formData.xuatphat + '&arrival=' + $scope.formData.diemden + 
+            url: 'http://localhost:3000/flights/available?departure=' + $scope.formData.xuatphat + '&arrival=' + $scope.formData.diemden + 
             '&date='+ date + '&seats_amount=' + $scope.formData.hang
         }).then(function(response){
             $scope.flights = response.data.data.flights;
@@ -124,7 +119,7 @@ mApp.controller('formController', function($scope, $http) {
     $scope.createBooking = function(){
         $http({
             method: "PUT",
-            url: "/booking/create"
+            url: "http://localhost:3000/booking/create"
         }).then(function(response){
            $scope.bookingId = response.data.data.booking.booking_id;
            alert("Mã đặt chỗ của bạn là: " + $scope.bookingId);
@@ -139,7 +134,7 @@ mApp.controller('formController', function($scope, $http) {
         console.log($scope.bookingId);
         $http({
             method: "POST",
-            url: "/booking/"+$scope.bookingId+"/add_flight_detail",
+            url: "http://localhost:3000/booking/"+$scope.bookingId+"/add_flight_detail",
             dataType: 'json',
             data: {
               flight_id: flight_id,
@@ -164,7 +159,7 @@ mApp.controller('formController', function($scope, $http) {
         };
         $http({
             method: "POST",
-            url: "/passengers/create",
+            url: "http://localhost:3000/passengers/create",
             dataType: 'json',
             data: {
                 bookingId: $scope.bookingId,
