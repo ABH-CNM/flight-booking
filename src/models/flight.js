@@ -1,5 +1,4 @@
 var database = require('../utils/database'),
-    expect = require('chai').expect;
 
 const FLIGHT_COLLECTION = 'flight';
 const NOT_FOUND = 'resource not found';

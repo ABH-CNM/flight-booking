@@ -1,5 +1,4 @@
 var database = require('../utils/database'),
-    expect = require('chai').expect;
 
 const BOOKING_COLLECTION = 'booking'
 const BOOKING_STATUS_PENDING = 0;
