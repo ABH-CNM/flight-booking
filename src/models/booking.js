@@ -1,10 +1,10 @@
 var database = require('../utils/database'),
 
-const BOOKING_COLLECTION = 'booking'
-const BOOKING_STATUS_PENDING = 0;
-const BOOK_STATUS_APPROVED = 1;
-const NOT_FOUND = 'resource not found';
-const UPDATED = 'updated';
+var BOOKING_COLLECTION = 'booking'
+var BOOKING_STATUS_PENDING = 0;
+var BOOK_STATUS_APPROVED = 1;
+var NOT_FOUND = 'resource not found';
+var UPDATED = 'updated';
 
 function booking() {
   return {
