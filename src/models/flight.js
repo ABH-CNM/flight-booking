@@ -1,7 +1,7 @@
 var database = require('../utils/database'),
 
-const FLIGHT_COLLECTION = 'flight';
-const NOT_FOUND = 'resource not found';
+var FLIGHT_COLLECTION = 'flight';
+var NOT_FOUND = 'resource not found';
 
 function flight() {
   return {
