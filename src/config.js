@@ -1,6 +1,6 @@
 module.exports = {
   production: {
-    dbUri: process.env.MONGODB_URI,
+    dbUri: "mongodb://flightbooking:1234qwer@ds031257.mlab.com:31257/flight-booking",
     port: 80
   },
   development: {
