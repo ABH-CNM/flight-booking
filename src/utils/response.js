@@ -1,7 +1,7 @@
-const STATUS_SUCCESS = 'success';
-const STATUS_ERROR = 'error';
-const STATUS_FAIL = 'fail';
-const STATUS_INVALID_DATA = 'fail';
+var STATUS_SUCCESS = 'success';
+var STATUS_ERROR = 'error';
+var STATUS_FAIL = 'fail';
+var STATUS_INVALID_DATA = 'fail';
 
 module.exports = {
   success: function(res, content) {

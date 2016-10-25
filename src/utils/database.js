@@ -4,36 +4,22 @@
 var MongoClient = require('mongodb').MongoClient,
     config = require('../config.js');
 
-const MODE_PRODUCTION = 'mode_production';
-const MODE_TEST = 'mode_test';  // create a new database for running test with mocha
-
-var state = {
-  db: null,
-  mode: null
-};
+var flightBookingDb = null;
 
 // connect to mongodb database, with 2 modes: production or test
 // database URI is retrieved from ./config.js
-function connect(mode, done) {
+function connect(done) {
   if (isConnected()) {
     return done();
   }
 
   // choose database URI base on mode
-  var uri = null;
-  if (mode === MODE_PRODUCTION) {
-    uri = config.database.production_uri;
-  } else if (mode === MODE_TEST) {
-    uri = config.database.test_uri;
-  } else {
-    return done(new Error("Mode is not valid!"));
-  }
+  var uri = resolveDbUri();
 
   // connect
   MongoClient.connect(uri, function(err, db) {
     if (!err) {
-      state.db = db;
-      state.mode = mode;
+      flightBookingDb = db;
       done();
     } else {
       return done(err);
@@ -43,7 +29,7 @@ function connect(mode, done) {
 
 // rest of application can access mongodb db object through this function
 function getDb() {
-  return state.db;
+  return flightBookingDb;
 }
 
 // drop database
@@ -53,7 +39,7 @@ function drop(done) {
     return done(new Error("Missing database connection!"));
   }
 
-  state.db.dropDatabase(function(err) {
+  flightBookingDb.dropDatabase(function(err) {
     done();
   });
 }
@@ -67,7 +53,7 @@ function fixture(collection, done) {
 
   var collectionName = collection.name;
   var documents = collection.documents;
-  state.db.collection(collectionName).insertMany(documents, function(err, result) {
+  flightBookingDb.collection(collectionName).insertMany(documents, function(err, result) {
     if (!err) {
       done();
     } else {
@@ -78,12 +64,30 @@ function fixture(collection, done) {
 
 // check if database is connected
 function isConnected() {
-  return state.db !== null;
+  return flightBookingDb !== null;
+}
+
+function resolveDbUri() {
+  var mode = process.env.NODE_ENV;
+  var dbUri = '';
+  switch (mode) {
+  case 'production':
+    dbUri = config.production.dbUri;
+    break;
+  case 'development':
+    dbUri = config.development.dbUri;
+    break;
+  case 'test':
+    dbUri = config.test.dbUri;
+    break;
+  default:
+    dbUri = config.development.dbUri;
+    break;
+  }
+  return dbUri;
 }
 
 module.exports = {
-  MODE_PRODUCTION,
-  MODE_TEST,
   connect,
   getDb,
   drop,
