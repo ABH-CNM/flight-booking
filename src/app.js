@@ -8,7 +8,8 @@ var path = require('path'),
 var app = express();
 
 function initialize() {
-  app.set('port', process.env.PORT || config.default_port);
+  var defaultPort = resolvePort();
+  app.set('port', process.env.PORT || defaultPort);
   app.set('view engine', 'pug');
   app.set('views', path.join(__dirname, 'views'));
   app.use(bodyParser.urlencoded({ extended: false }))
@@ -17,29 +18,36 @@ function initialize() {
 }
 
 function launch() {
-  var arg = process.argv[2];
-  if (isProduction(arg)) {
-    database.connect(database.MODE_PRODUCTION, function(err) {
-      if (!err) {
-        setupRoute(app);
-        app.listen(app.get('port'));
-        console.log("Server is listening on port", app.get('port'));
-      }
-      else {
-        console.error(err);
-      }
-    });
-  } else {
-    database.connect(database.MODE_TEST, function(err) {
+  database.connect(function(err) {
+    if (!err) {
       setupRoute(app);
       app.listen(app.get('port'));
-      console.log("Server is listening for testing on port", app.get('port'));
-    });
-  }
-}
+      console.log("Server is listening on port", app.get('port'));
+    }
+    else {
+      console.error(err);
+    }
+  });
+};
 
-function isProduction(option) {
-  return option !== 'test';
+function resolvePort() {
+  var mode = process.env.NODE_ENV;
+  var port;
+  switch (mode) {
+  case 'production':
+    port = config.production.port;
+    break;
+  case 'development':
+    port = config.development.port;
+    break;
+  case 'test':
+    port = config.test.port;
+    break;
+  default:
+    port = config.development.port;
+    break;
+  }
+  return port;
 }
 
 module.exports = {

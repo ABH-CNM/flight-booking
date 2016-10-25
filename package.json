@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "watch-back": "nodemon server.js",
-    "watch-test": "nodemon server.js test"
+    "test": "set NODE_ENV=test&& mocha",
+    "start": "set NODE_ENV=development&& nodemon server.js",
+    "db-sample": "node ./db-sample.js"
   },
   "author": "ABH",
   "license": "ISC",

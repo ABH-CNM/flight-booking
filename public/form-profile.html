@@ -1,0 +1,49 @@
+<div layout="column" class="md-inline-form inputdemoBasicUsage">
+    <md-content layout-padding="">
+        <div>
+            <form name="userForm" novalidate>
+                <md-input-container layout-gt-sm="row" class="md-block" ng-class="{ 'has-error': userForm.name.$touched && userForm.name.$invalid }">
+                    <label>Từ</label>
+                    <md-select ng-model="formData.xuatphat" ng-required="true">
+                        <md-option ng-repeat="xuatphat in xp" value="{{xuatphat}}">{{xuatphat}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" required>
+                    <label>Đến</label>
+                    <md-select ng-model="formData.diemden" md-on-open="loadArrivals()" ng-required="true">
+                        <md-option ng-repeat="diemden in dd" value="{{diemden}}">{{diemden}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <div layout-gt-sm="row">
+                    <label>Ngày đi</label>
+                    <md-datepicker class="md-block" flex-gt-sm="" ng-model="formData.ngaydi" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate" ng-required="true">Ngày đi</md-datepicker>
+                    <label>Ngày về</label>
+                    <md-datepicker class="md-block" flex-gt-sm="" ng-model="formData.ngayve" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate">Ngày về</md-datepicker>
+                </div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm="">
+                        <label>Số lượng vé</label>
+                        <md-select ng-model="formData.numTicket" ng-required="true">
+                            <md-option ng-repeat="numTicket in nTickets" value="{{numTicket}}" >{{numTicket}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="">
+                        <label>Hạng</label>
+                        <md-select ng-model="formData.hang" ng-required="true">
+                            <md-option value="1">Phổ thông</md-option>
+                            <md-option value="2">Thương gia</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </form>
+        </div>
+    </md-content>
+</div>
+<div class="form-group row findFlight">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a ui-sref="form.interests" class="btn btn-block btn-info" ng-click="findFlight()">
+            Tìm chuyến bay
+            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+</div>

@@ -1,7 +1,14 @@
 module.exports = {
-  "database": {
-    "production_uri": "mongodb://localhost/flight-booking",
-    "test_uri": "mongodb://localhost/flight-booking-test"
+  production: {
+    dbUri: process.env.MONGODB_URI,
+    port: 80
   },
-  "default_port": 3000
+  development: {
+    dbUri: "mongodb://localhost/flight-booking",
+    port: 3000
+  },
+  test: {
+    dbUri: "mongodb://localhost/flight-booking-test",
+    port: 3001
+  }
 };
