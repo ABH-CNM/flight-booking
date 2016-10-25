@@ -2,7 +2,7 @@ var database = require('./src/utils/database');
 var bookingData = require('./test/fixtures/booking');
 var flightData = require('./test/fixtures/flight');
 
-database.connect(database.MODE_PRODUCTION, function(err) {
+database.connect(function(err) {
   if (!err) {
     database.drop(function(err) {
       var count = 0;
