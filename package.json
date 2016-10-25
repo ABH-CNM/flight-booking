@@ -6,7 +6,7 @@
   "scripts": {
     "test": "set NODE_ENV=test&& mocha",
     "start-dev": "set NODE_ENV=development&& nodemon server.js",
-    "start": "node server",
+    "start": "node server.js",
     "db-sample": "node ./db-sample.js"
   },
   "author": "ABH",
