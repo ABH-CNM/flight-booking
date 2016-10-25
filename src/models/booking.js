@@ -1,6 +1,6 @@
-var database = require('../utils/database'),
+var database = require('../utils/database');
 
-var BOOKING_COLLECTION = 'booking'
+var BOOKING_COLLECTION = 'booking';
 var BOOKING_STATUS_PENDING = 0;
 var BOOK_STATUS_APPROVED = 1;
 var NOT_FOUND = 'resource not found';

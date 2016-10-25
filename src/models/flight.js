@@ -1,4 +1,4 @@
-var database = require('../utils/database'),
+var database = require('../utils/database');
 
 var FLIGHT_COLLECTION = 'flight';
 var NOT_FOUND = 'resource not found';
