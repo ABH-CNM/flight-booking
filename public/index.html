@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <!-- CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/3.1.1/darkly/bootstrap.min.css">
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
@@ -11,10 +13,22 @@
     <link rel="stylesheet" href="http://rawgit.com/daniel-nagy/md-data-table/master/dist/md-data-table.css">
 
 </head>
-<body ng-app="formApp">
+<body ng-app="formApp" ng-controller="formController">
     <!-- views will be injected here -->
+    <div class="page-header text-center">
+          <h2>Flight Booking</h2>
+          
+          <!-- the links to our nested states using relative paths -->
+          <!-- add the active class if the state matches our ui-sref -->
+          <div id="status-buttons" class="text-center">
+              <a><span>1</span>Information</a>
+              <a><span>2</span>Find Flights</a>
+              <a><span>3</span>Booking</a>
+              <a><span>4</span>Complete</a>
+          </div>
+      </div>
     <div class="container">
-        <div ui-view></div>
+        <div ng-view></div>
     </div>
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
@@ -23,20 +37,22 @@
                     <a href="https://github.com/ABH-CNM/flight-booking" target="_blank">ABH Team</a>
                 </p>
                 <p>
-                    <a href="//google.com.vn">Đặt vé máy bay</a>
+                    <a>Đặt vé máy bay</a>
                 </p>
             </div>
         </div>
     </div>
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
     <!-- Angular Material Library -->
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
-     <script src="http://rawgit.com/daniel-nagy/md-data-table/master/dist/md-data-table.js"></script>
-    <script src="angular-ui-router.min.js"></script>
+    <script src="http://rawgit.com/daniel-nagy/md-data-table/master/dist/md-data-table.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <!-- <script src="angular-ui-router.min.js"></script> -->
     <script src="app.js"></script>
 </body>
 </html>

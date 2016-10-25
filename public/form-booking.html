@@ -6,21 +6,29 @@
 </div>-->
 
 <div layout="column" class="md-inline-form inputdemoBasicUsage">
+    <div class="form-group row findFlight">
+        <div class="col-xs-6 col-xs-offset-3">
+            <a class="btn btn-block" href="#flights">
+                <span class="glyphicon glyphicon-circle-arrow-left fa-2x"></span>
+            </a>
+        </div>
+    </div>
     <md-content layout-padding="">
         <div>
+            <p ng-model="formData.notification" style="text-align: center; font-weight: italic">{{formData.notification}}</p>
             <form name="userForm">
             	<md-input-container layout-gt-sm="row" class="md-block">
                     <label>Firstname</label>
-                    <input ng-model="formData.firstname">
+                    <input ng-model="formData.firstname" ng-required="true">
                 </md-input-container>
                 <md-input-container layout-gt-sm="row" class="md-block">
                     <label>Lastname</label>
-                    <input ng-model="formData.lastname">
+                    <input ng-model="formData.lastname" ng-required="true">
                 </md-input-container>
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label>Title</label>
-                        <md-select ng-model="formData.title">
+                        <md-select ng-model="formData.title" ng-required="true">
                             <md-option value="ms">Ms</md-option>
                             <md-option value="mr">Mr</md-option>
                         </md-select>
@@ -32,9 +40,17 @@
 </div>
 <div class="form-group row">
     <div class="col-xs-6 col-xs-offset-3">
-        <a class="btn btn-block btn-info" ng-click="completeBooking()">
+        <a href="#complete" class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="addPassengers()">
         Đặt chỗ <span class="glyphicon glyphicon-circle-arrow-right"></span>
         </a>
     </div>
 </div>
+<!-- <div class="form-group row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="updateStatus() ">
+        Update <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+</div>
 
+ -->

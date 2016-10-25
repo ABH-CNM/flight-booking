@@ -74,13 +74,13 @@ pre                             { margin-bottom:20px; }
 	margin: 15px !important;
 }
 .md-list-item-text p {
-	padding-right: 30px;
+	padding-right: 75px;
 }
 .md-list-item{
 	margin: 40px 0 0 0;
 	padding: 0;
 }
 .md-list-item p{
-	padding-right: 29px;
+	padding-right: 70px;
 	font-weight: bold;
 }

@@ -1,0 +1,42 @@
+
+<div layout="column" class="md-inline-form inputdemoBasicUsage">
+    <md-content layout-padding="">
+       <p ng-model="formData.notifications" style="text-align: center; font-weight: italic">{{formData.notifications}}</p>
+       <form name="flightForm">
+          <md-list-item class="md-3-line">
+            <div class="md-list-item" layout-gt-sm="row">
+                <p>Mã đặt chỗ</p>
+                <p>Thời gian</p>
+                <p>Mã chuyến bay</p>
+                <p>Class</p>
+                <p>Price</p>
+                <p>Title</p>
+                <p>FirstName</p>
+                <p>LastName</p>
+             </div>
+           </md-list-item>
+           <md-list-item class="md-3-line">
+            <div class="md-list-item" layout-gt-sm="row" ng-model="formData.booking">
+                <p>{{formData.booking.booking_id}}</p>
+                <p>{{formData.booking.time}}</p>
+                <p>{{formData.booking.flight_details[0].flight_id}}</p>
+                <p>{{formData.booking.flight_details[0].class}}</p>
+                <p>{{formData.booking.flight_details[0].price}}</p>
+                <p>{{formData.booking.passengers[0].title}}</p>
+                <p>{{formData.booking.passengers[0].first_name}}</p>
+                <p>{{formData.booking.passengers[0].last_name}}</p>
+
+             </div>
+           </md-list-item>
+            
+            
+        </form>
+    </md-content>
+</div>
+<div class="form-group row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="bookingComplete()">
+        Xem thông tin Đặt chỗ <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+</div>

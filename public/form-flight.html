@@ -1,0 +1,65 @@
+<div flex="">
+    <div class="form-group row findFlight">
+        <div class="col-xs-6 col-xs-offset-3">
+            <a class="btn btn-block" href="#infomation">
+                <span class="glyphicon glyphicon-circle-arrow-left fa-2x"></span>
+            </a>
+        </div>
+    </div>
+    <md-content>
+        <form name="flightForm">
+          <md-list-item class="md-3-line">
+            <div class="md-list-item" layout-gt-sm="row">
+                <p>Mã</p>
+                <p>Nơi đi</p>
+                <p>Nơi đến</p>
+                <p>Ngày</p>
+                <p>Giờ</p>
+                <p>Class</p>
+                <p>Price</p>
+                <p>Số chỗ</p>
+                <p>Cost</p>
+                <p>Đặt chỗ</p>
+              </div>
+            </md-list-item>
+            <p ng-model="formData.message" style="text-align: center;">{{formData.message}}</p>
+            <md-radio-group ng-model="formData.flightChecked"  ng-required="true" >
+              <div ng-repeat='flight in flights' class="row">
+                <div flex layout='row' layout-padding layout-align="start center" >
+                    <md-list-item class="md-3-line">
+                        <div class="md-list-item-text" layout-gt-sm="row">
+                            <p> {{flight.flight_id}}</p>
+                            <p> {{flight.departure}}</p>
+                            <p> {{flight.arrival}}</p>
+                            <p> {{flight.date}}</p>
+                            <p> {{flight.hours}}</p>
+                            <p> {{flight.class}}</p>
+                            <p> {{flight.price}}</p>
+                            <p> {{flight.seats_amount}}</p>
+                            <p> {{flight.cost}}</p>
+                            <md-radio-button flex ng-value="flight" class="md-primary">
+                        </div>
+                    </md-list-item>
+                  </md-radio-button>
+                </div>
+              </div>
+            </md-radio-group>
+        </form>
+    </md-content>
+</div>
+<br>
+<p ng-model="bookingId" style="color: #000000">Mã đặt chỗ của bạn là :{{bookingId}}</p>
+<div class="form-group row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a class="btn btn-block btn-info" ng-click="createBooking()" ng-required="true">
+        Tạo mã đặt chỗ</span>
+        </a>
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a href="#booking" class="btn btn-block btn-info" ng-disabled="flightForm.$invalid" ng-click="addFlightDetail()">
+        Thêm chuyến bay <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+</div>

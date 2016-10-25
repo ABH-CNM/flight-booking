@@ -90,28 +90,28 @@ describe("Flight Booking Test", function() {
   // //   });
   // // });
 
-    // thêm chặng bay mới
-  it("POST /booking/:booking_id/add_flight_detail", function(done) {
-    request.put(URL + '/booking/create', function(err, response, body) {
-      var bookingId = JSON.parse(body).data.booking.booking_id;
-      request(
-        {
-          url: URL + '/booking/' + bookingId + '/add_flight_detail',
-          method: 'POST',
-          json: {
-            flight_id: 'BL36',
-            date: '2016-10-05',
-            class: 'C',
-            price: 'G'
-          }
-        },
-        function(error, response, body) {
-          console.log(JSON.stringify(body, null, 2));
-          done();
-        }
-      );  
-    });
-  });
+  //   // thêm chặng bay mới
+  // it("POST /booking/:booking_id/add_flight_detail", function(done) {
+  //   request.put(URL + '/booking/create', function(err, response, body) {
+  //     var bookingId = JSON.parse(body).data.booking.booking_id;
+  //     request(
+  //       {
+  //         url: URL + '/booking/' + bookingId + '/add_flight_detail',
+  //         method: 'POST',
+  //         json: {
+  //           flight_id: 'BL36',
+  //           date: '2016-10-05',
+  //           class: 'C',
+  //           price: 'G'
+  //         }
+  //       },
+  //       function(error, response, body) {
+  //         console.log(JSON.stringify(body, null, 2));
+  //         done();
+  //       }
+  //     );  
+  //   });
+  // });
 
   // // // thông tin mã đặt chỗ
   // // it("GET /booking/:booking_id", function(done) {
@@ -122,15 +122,16 @@ describe("Flight Booking Test", function() {
   // //   });
   // // });
 
-  // // // cập nhật trạng thái...
-  // // it("POST /booking/:booking_id/update_status/:status", function(done) {
-  // //   var bookingId = 'ABCXYZ';
-  // //   var status = 0;
-  // //   request.post(URL + '/booking/' + bookingId + '/update_status/' + status, function(err, response, body) {
-  // //     //printResult(body);
-  // //     done();
-  // //   });
-  // // });
+  // cập nhật trạng thái...
+  it("POST /booking/:booking_id/update_status/:status", function(done) {
+    var bookingId = 'ABCXYZ';
+    var status = 0;
+    request.post(URL + '/booking/' + bookingId + '/update_status/' + status, function(err, response, body) {
+      printResult(body);
+      console.log(response.statusCode);
+      done();
+    });
+  });
 
   // // // danh sách chặng bay theo mã đặt chỗ
   // // it("GET /booking/:booking_id/flight_details", function(done) {

@@ -41,7 +41,7 @@
 </div>
 <div class="form-group row findFlight">
     <div class="col-xs-6 col-xs-offset-3">
-        <a ui-sref="form.interests" class="btn btn-block btn-info" ng-click="findFlight()">
+        <a class="btn btn-block btn-info" href="#flights" ng-disabled="userForm.$invalid" ng-click="findFlight()">
             Tìm chuyến bay
             <span class="glyphicon glyphicon-circle-arrow-right"></span>
         </a>
