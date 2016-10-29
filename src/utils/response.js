@@ -20,6 +20,15 @@ module.exports = {
       }
     });
   },
+  forbidden: function(res, message) {
+    var msg = message || '403 Forbidden';
+    res.status(403).json({
+      status: STATUS_FAIL,
+      data: {
+        message: msg
+      }
+    })
+  },
   invalidData: function(res, message) {
     var invalidDataMessage = message || 'Bad data.';
     res.status(400).json({

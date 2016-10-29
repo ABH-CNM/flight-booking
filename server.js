@@ -1,4 +1,3 @@
-var flightBooking = require('./src/app');
+var app = require('./src/app');
 
-flightBooking.initialize();
-flightBooking.launch();
+app.start();

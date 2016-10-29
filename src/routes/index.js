@@ -1,13 +1,9 @@
-var home = require('./home'),
-    flight = require('./flight'),
-    booking = require('./booking'),
-    passenger = require('./passenger');
+var booking = require('./booking');
+var admin = require('./admin');
 
-function setupRoute(app) {
-  app.use('/', home);
-  app.use('/', flight);
+function apiRoutes(app) {
+  app.use('/', admin);
   app.use('/', booking);
-  app.use('/', passenger);
 }
 
-module.exports = setupRoute;
+module.exports = apiRoutes;

@@ -1,32 +1,32 @@
-var path = require('path'),
-    express = require('express'),
-    bodyParser = require('body-parser'),
-    config = require('./config'),
-    database = require('./utils/database'),
-    setupRoute = require('./routes/index');
+var path = require('path');
+var express = require('express');
+var bodyParser = require('body-parser');
+var config = require('./config');
+var database = require('./utils/database');
+var apiRoutes = require('./routes/index');
 
 var app = express();
 
-function initialize() {
-  var defaultPort = resolvePort();
-  app.set('port', process.env.PORT || defaultPort);
-  app.set('view engine', 'pug');
-  app.set('views', path.join(__dirname, 'views'));
-  app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(bodyParser.json())
-  app.use(express.static(path.join(__dirname, '..', 'public')));
-}
+var defaultPort = resolvePort();
+app.set('port', process.env.PORT || defaultPort);
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.set('secret', config.secret);
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
-function launch() {
+app.start = function(callback) {
   database.connect(function(err) {
     if (!err) {
-      setupRoute(app);
+      apiRoutes(app);
       app.listen(app.get('port'));
       console.log("Server is listening on port", app.get('port'));
     }
     else {
       console.error(err);
     }
+    if (callback) { callback(); }
   });
 };
 
@@ -50,7 +50,4 @@ function resolvePort() {
   return port;
 }
 
-module.exports = {
-  initialize,
-  launch
-};
+module.exports = app;

@@ -10,5 +10,6 @@ module.exports = {
   test: {
     dbUri: "mongodb://localhost/flight-booking-test",
     port: 3001
-  }
+  },
+  secret: 'flightbooking'
 };
