@@ -21,6 +21,14 @@ mApp.config(function($routeProvider) {
 			templateUrl: 'form-flight.html',
 			// controller: 'formController'
 		})
+        //route admin page
+        .when('/admin',{
+            templateUrl: 'form-admin.html', 
+            isLogin: true
+        })
+        .when('/login',{
+            templateUrl: 'form-login.html',
+        })
 		// route for the contact page
 		.when('/booking', {
 			templateUrl: 'form-booking.html',
@@ -59,11 +67,11 @@ mApp.config(function($routeProvider) {
 //     // send users to the form page
 //     $urlRouterProvider.otherwise('/form/profile');
 // })
-
+ 
 // our controller for the form
 // =============================================================================
-mApp.controller('formController', function($scope, $http) {
-    var url = '/flights/departures/all';
+mApp.controller('formController', function($scope, $http, $location, $rootScope) {
+    var url = 'http://localhost:3000/flights/departures/all';
     $scope.flights =[];
     $scope.bookings = [];
     $scope.bookingId;
@@ -80,7 +88,7 @@ mApp.controller('formController', function($scope, $http) {
     $scope.loadArrivals = function(){
         $http({
         method: "GET",
-        url: '/flights/arrivals?departure=' + $scope.formData.xuatphat
+        url: 'http://localhost:3000/flights/arrivals?departure=' + $scope.formData.xuatphat
         }).then(function mySucces(response) {
             $scope.dd = response.data.data.arrivals;
         }, function myError(response) {
@@ -182,4 +190,47 @@ mApp.controller('formController', function($scope, $http) {
         },function(response){
         });
     }
+     var token;
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+        var userAuthenticated = token;
+
+        if (!userAuthenticated && !next.isLogin) {
+            /* You can save the user's location to take him back to the same page after he has logged-in */
+            $rootScope.savedLocation = $location.url();
+
+            $location.path('/login');
+        }
+    });
+    $scope.login =function(){
+        $http({
+            method: "POST",
+            url: "http://localhost:3000/admin/authenticate",
+            dataType: 'json',
+            data:{
+                username: $scope.formData.username,
+                password: $scope.formData.password
+            }
+        }).then(function(response, body){
+            console.log(response);
+            token = response.data.data.token;
+            console.log(token);
+            $location.path('/login')
+        },function(response){
+
+        });
+    }
+    $scope.getFlight = function(){
+        $http({
+            method: "GET",
+            url: "http://localhost:3000/flights/all",
+            headers: {
+              "x-access-token": token
+            }
+        }).then(function(response){
+            console.log(response);
+        },function(response){
+
+        });
+    }
 });
+

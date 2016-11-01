@@ -54,6 +54,19 @@ describe("User routing test", function() {
     }); 
   });
 
+  it("should get all flights", function(done) {
+    request({
+      url: URL + '/flights/all',
+      headers: {
+        "x-access-token": t
+      }
+    }, function(err, response, body) {
+      expect(err).to.be.null;
+      expect(response.statusCode).to.equal(200);
+      expect(JSON.parse(body).data.flights.length).to.be.above(0);
+    });
+  });
+
 
   // test create flight
   // it("POST /flight/create", function(done){

@@ -84,3 +84,13 @@ pre                             { margin-bottom:20px; }
 	padding-right: 70px;
 	font-weight: bold;
 }
+
+.dialogdemoBasicUsage #popupContainer {
+  position: relative;
+}
+
+#login-dialog {
+  max-width: 90%;
+  width: 500px;
+}
+

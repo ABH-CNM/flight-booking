@@ -58,6 +58,18 @@ module.exports = {
     });
   },
 
+  findAllFlights: function(callback) {
+    var collection = database.getDb().collection(FLIGHT_COLLECTION);
+    collection.find().toArray(function(err, flights) {
+      console.log(flights);
+      if (!err) {
+        callback(null, flights);
+      } else {
+        callback(err);
+      }
+    });
+  },
+
   // create flight
   createFlight: function(flight_object, callback){
      /// console.log("models outside: createFlight")

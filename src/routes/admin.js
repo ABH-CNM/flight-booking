@@ -87,4 +87,14 @@ router.delete('/flight/remove/:id', function(req, res) {
   });
 });
 
+router.get('/flights/all', function(req, res) {
+  Flight.findAllFlights(function(err, flights) {
+    if (!err) {
+      response.success(res, {flights: flights});
+    } else {
+      response.notFound(res, 'There are no flights');
+    }
+  });
+});
+
 module.exports = router;
