@@ -96,8 +96,6 @@ router.post('/booking/:booking_id/add_flight_detail', function(req, res) {
     }
 
   });
-
-
 });
 
 router.get('/flights/:flight_id/passengers', function(req, res) {

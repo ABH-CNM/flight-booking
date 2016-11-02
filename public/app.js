@@ -1,5 +1,6 @@
 // create our angular app and inject ngAnimate and ui-router
 // =============================================================================
+var token ='';
 var mApp = angular.module('formApp', ['ngMaterial', 'ngAnimate', 'ngRoute']);
 
 mApp.config(function($routeProvider) {
@@ -27,7 +28,10 @@ mApp.config(function($routeProvider) {
             isLogin: true
         })
         .when('/login',{
-            templateUrl: 'form-login.html',
+            templateUrl: function(){
+                console.log(token);
+                return 'form-login?token=' + token
+            },
         })
 		// route for the contact page
 		.when('/booking', {
@@ -70,7 +74,8 @@ mApp.config(function($routeProvider) {
  
 // our controller for the form
 // =============================================================================
-mApp.controller('formController', function($scope, $http, $location, $rootScope) {
+mApp.controller('formController', function($scope, $http, $location, $rootScope,$mdDialog) {
+    var self = this;
     var url = 'http://localhost:3000/flights/departures/all';
     $scope.flights =[];
     $scope.bookings = [];
@@ -190,17 +195,7 @@ mApp.controller('formController', function($scope, $http, $location, $rootScope)
         },function(response){
         });
     }
-     var token;
-    $rootScope.$on('$routeChangeStart', function (event, next) {
-        var userAuthenticated = token;
-
-        if (!userAuthenticated && !next.isLogin) {
-            /* You can save the user's location to take him back to the same page after he has logged-in */
-            $rootScope.savedLocation = $location.url();
-
-            $location.path('/login');
-        }
-    });
+    //Admin login
     $scope.login =function(){
         $http({
             method: "POST",
@@ -219,6 +214,7 @@ mApp.controller('formController', function($scope, $http, $location, $rootScope)
 
         });
     }
+    //admin get all flight
     $scope.getFlight = function(){
         $http({
             method: "GET",
@@ -227,10 +223,143 @@ mApp.controller('formController', function($scope, $http, $location, $rootScope)
               "x-access-token": token
             }
         }).then(function(response){
-            console.log(response);
+           $scope.flights = response.data.data.flights;
+           console.log(response);
         },function(response){
 
         });
     }
+    //Delete Flight
+    $scope.deleteFlight = function(){
+        var _id = $scope.formData.flightChecked._id;
+        $http({
+            method: "DELETE",
+            url: "http://localhost:3000/flight/remove/" + _id,
+            headers: {
+              "x-access-token": token
+            }
+        }).then(function(response){
+            console.log(response);
+            alert("Delete Success!")
+        },function(response){
+
+        });
+        $http({
+            method: "GET",
+            url: "http://localhost:3000/flights/all",
+            headers: {
+              "x-access-token": token
+            }
+        }).then(function(response){
+            console.log(response);
+           $scope.flights = response.data.data.flights;
+        },function(response){
+
+        });
+    }
+
+    this.AddFlight = function(){
+        console.log('Nice');
+    }
+    //show dialog eidt and add flight
+    $scope.showDialog = function($event, btn, st) {
+        $mdDialog.show({
+            controller: function(){
+                return self;
+            },
+            controllerAs: 'ctrl',
+            templateUrl: 'dialog.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: $event,
+            clickOutsideToClose: true
+        });
+        if (btn === 'add') {
+            self.title = 'Add new Flight';
+            self.edit = false;
+            self.btntext = 'Add';
+            self.flight = {};
+        } else {
+            self.title = 'Edit Flight';
+            self.edit = true;
+            self.btntext = 'Save';
+            self.flight = $scope.formData.flightChecked;
+        }
+    };
+
+
+    self.cancel = function($event) {
+        $mdDialog.cancel();
+    };
+
+    self.finish = function($event, btn, flight) {
+        var month = flight.ngaydi.getMonth() + 1;
+        var day;
+        if (flight.ngaydi.getDate() < 10) {
+            day = '0' + flight.ngaydi.getDate();
+        }else{
+            day = flight.ngaydi.getDate();
+        }
+        var date = flight.ngaydi.getFullYear()+'-'+ month +'-'+ day;
+        console.log(date);
+        $mdDialog.hide();
+        var flight = {
+            flight_id: flight.flight_id,
+            departure: flight.departure,
+            arrival: flight.arrival,
+            date: date,
+            hours: flight.hours,
+            class: flight.class,
+            price: flight.price,
+            seats_amount: flight.seats_amount,
+            cost: flight.cost 
+        }
+        console.log(flight);
+        if (btn === 'Add') {
+        $http({
+            method: "POST",
+            url: "http://localhost:3000/flight/create",
+            dataType: 'json',
+            data: {
+                flight: flight,
+            },
+            headers: {
+              "x-access-token": token
+            }
+            }).then(function(response){
+                console.log(response);
+            },function(response){
+            });   
+  
+        } else if (btn === 'Save') {
+            var _id = $scope.formData.flightChecked._id;
+            console.log(flight);
+            $http({
+            method: "PUT",
+            url: "http://localhost:3000/flight/update/"+ _id,
+            dataType: 'json',
+            data: {
+                flight: flight,
+            },
+            headers: {
+              "x-access-token": token
+            }
+            }).then(function(response){
+                console.log(response);
+            },function(response){
+            });   
+        }
+        $http({
+            method: "GET",
+            url: "http://localhost:3000/flights/all",
+            headers: {
+              "x-access-token": token
+            }
+        }).then(function(response){
+           $scope.flights = response.data.data.flights;
+        },function(response){
+
+        });
+    };
+
 });
 

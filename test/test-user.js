@@ -54,55 +54,55 @@ describe("User routing test", function() {
     }); 
   });
 
-  it("should get all flights", function(done) {
-    request({
-      url: URL + '/flights/all',
-      headers: {
-        "x-access-token": t
-      }
-    }, function(err, response, body) {
-      expect(err).to.be.null;
-      expect(response.statusCode).to.equal(200);
-      expect(JSON.parse(body).data.flights.length).to.be.above(0);
-    });
-  });
-
-
-  // test create flight
-  // it("POST /flight/create", function(done){
-  //   console.log("test: flight/create")
-  //  // console.log(t);
-  //   var flight = {
-  //       flight_id: 'BL330',
-  //       departure: 'TBB',
-  //       arrival: 'ANG',
-  //       date: '2016-05-05',
-  //       hours: '07:00',
-  //       class: 'Y',
-  //       price: 'E',
-  //       seats_amount: '50',
-  //       cost: '100000'      
-  //     };
-  //   request(
-  //     {
-  //       url: URL + '/flight/create',
-  //       method: 'POST',
-  //       dataType: 'json',
-  //       headers: {
-  //         "x-access-token": t
-  //       },        
-  //       json: {
-  //         flight: flight
-  //       }
-  //     },
-  //     function(error, response, body) {
-  //       console.log(body);
-  //       expect(response.statusCode).to.equal(200);
-  //       done();
+  // it("should get all flights", function(done) {
+  //   request({
+  //     url: URL + '/flights/all',
+  //     headers: {
+  //       "x-access-token": t
   //     }
-  //   ); 
-
+  //   }, function(err, response, body) {
+  //     expect(err).to.be.null;
+  //     expect(response.statusCode).to.equal(200);
+  //     expect(JSON.parse(body).data.flights.length).to.be.above(0);
+  //   });
   // });
+
+
+  //test create flight
+  it("POST /flight/create", function(done){
+    console.log("test: flight/create")
+   // console.log(t);
+    var flight = {
+        flight_id: 'BL330',
+        departure: 'TBB',
+        arrival: 'ANG',
+        date: '2016-05-05',
+        hours: '07:00',
+        class: 'Y',
+        price: 'E',
+        seats_amount: '50',
+        cost: '100000'      
+      };
+    request(
+      {
+        url: URL + '/flight/create',
+        method: 'POST',
+        dataType: 'json',
+        headers: {
+          "x-access-token": t
+        },        
+        json: {
+          flight: flight
+        }
+      },
+      function(error, response, body) {
+        console.log(body);
+        expect(response.statusCode).to.equal(200);
+        done();
+      }
+    ); 
+
+  });
 
 
   // test update flight
@@ -163,9 +163,4 @@ describe("User routing test", function() {
   //     }
   //   ); 
   // });
-
-  
-
-
-
 });

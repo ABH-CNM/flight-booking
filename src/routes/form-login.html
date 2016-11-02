@@ -1,0 +1,147 @@
+<!-- <div class="alert alert-info">
+    Username: test<br />
+    Password: test
+</div>
+<div ng-show="error" class="alert alert-danger">{{error}}</div>
+<form name="form" ng-submit="login()" role="form">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <i class="fa fa-key"></i>
+        <input type="text" name="username" id="username" class="form-control" ng-model="username" required />
+        <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <i class="fa fa-lock"></i>
+        <input type="password" name="password" id="password" class="form-control" ng-model="password" required />
+        <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+    </div>
+    <div class="form-actions">
+        <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Login</button>
+        <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+    </div>
+</form> -->
+<div class="form-group row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a class="btn btn-block btn-info" ng-click="getFlight()" ng-required="true">
+        Get chuyến bay</span>
+        </a>
+    </div>
+</div>
+<div flex="">
+    <md-content>
+        <form name="flightForm">
+          <md-list-item class="md-3-line">
+            <div class="md-list-item" layout-gt-sm="row">
+                <p>Mã</p>
+                <p>Nơi đi</p>
+                <p>Nơi đến</p>
+                <p>Ngày</p>
+                <p>Giờ</p>
+                <p>Class</p>
+                <p>Price</p>
+                <p>Số chỗ</p>
+                <p>Cost</p>
+                <p>Chọn</p>
+              </div>
+            </md-list-item>
+            <md-radio-group ng-model="formData.flightChecked"  ng-required="true" >
+              <div ng-repeat='flight in flights' class="row">
+                <div flex layout='row' layout-padding layout-align="start center" >
+                    <md-list-item class="md-3-line">
+                        <div class="md-list-item-text" layout-gt-sm="row">
+                            <p> {{flight.flight_id}}</p>
+                            <p> {{flight.departure}}</p>
+                            <p> {{flight.arrival}}</p>
+                            <p> {{flight.date}}</p>
+                            <p> {{flight.hours}}</p>
+                            <p> {{flight.class}}</p>
+                            <p> {{flight.price}}</p>
+                            <p> {{flight.seats_amount}}</p>
+                            <p> {{flight.cost}}</p>
+                            <md-radio-button flex ng-value="flight" class="md-primary">
+                        </div>
+                    </md-list-item>
+                  </md-radio-button>
+                </div>
+              </div>
+            </md-radio-group>
+        </form>
+    </md-content>
+</div>
+<div class="form-group row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a href="" class="btn btn-block btn-info" ng-click="showDialog($event, 'add', null)">
+        Thêm chuyến bay <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a href="" class="btn btn-block btn-info" ng-disabled="flightForm.$invalid" ng-click="showDialog($event, 'edit', student)">
+        Sửa chuyến bay <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a href="" class="btn btn-block btn-info" ng-disabled="flightForm.$invalid" ng-click="deleteFlight()">
+        Xóa chuyến bay <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+</div>
+<script type="text/ng-template" id="dialog.tmpl.html">
+            <md-dialog aria-label="{{ctrl.title}}">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>{{ctrl.title}}</h2>
+                    <span flex></span>
+                    </div>
+            </md-toolbar>
+            <md-dialog-content ng-cloak>
+                <div class="md-dialog-content">
+                    <form ng-submit="$event.preventDefault()">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Mã chuyến bay</label>
+                            <input ng-model="ctrl.flight.flight_id" ng-disabled="ctrl.edit">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Nơi đi</label>
+                            <input ng-model="ctrl.flight.departure">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Nơi đến</label>
+                            <input ng-model="ctrl.flight.arrival">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Ngày đi</label>
+                            <md-datepicker class="md-block" flex-gt-sm="" ng-model="ctrl.flight.ngaydi" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate" ng-required="true">Ngày đi</md-datepicker>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Giờ</label>
+                            <input ng-model="ctrl.flight.hours">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Class</label>
+                            <input ng-model="ctrl.flight.class">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Price</label>
+                            <input ng-model="ctrl.flight.price">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Số chỗ</label>
+                            <input ng-model="ctrl.flight.seats_amount">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Cost</label>
+                            <input ng-model="ctrl.flight.cost">
+                        </md-input-container>
+                    </form>
+                </div>
+            </md-dialog-content>
+            <md-dialog-actions>
+                <md-button aria-label="{{ctrl.btntext}}" ng-click="ctrl.finish($event, ctrl.btntext, ctrl.flight)">{{ctrl.btntext}}</md-button>
+            </md-dialog-actions>
+            </md-dialog>
+</script>

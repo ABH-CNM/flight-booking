@@ -4,6 +4,22 @@ var config = require('../config');
 var User = require('../models/User');
 var Flight = require('../models/flight');
 var response = require('../utils/response');
+var path = require('path');
+
+router.get('/form-login', function(req, res){
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  if (token) {
+    jwt.verify(token, config.secret, function(err, decoded) {
+      if (err) {
+        return response.forbidden(res, 'You do not have permission to access this resource.');
+      } else {
+        res.sendFile(path.join(__dirname, 'form-login.html'));
+      }
+    });
+  } else {
+    res.send('You do not have permission to access this resource. Please login!');
+  }
+});
 
 router.post('/admin/authenticate', function(req, res) {
   var username = req.body.username;
@@ -16,7 +32,6 @@ router.post('/admin/authenticate', function(req, res) {
     }
   });
 });
-
 
 // route middleware to guard admin's routes
 router.use(function(req, res, next) {
@@ -35,16 +50,22 @@ router.use(function(req, res, next) {
   }
 });
 
+router.get('/form-login', function(req, res){
+  res.sendFile(path.join(__dirname, 'form-login.html'));
+});
+
 // CUD operatons for flight here
 router.get('/test', function(req, res) {
   res.json({message: 'you make it.'});
 });
 
-
 // day ak? tao flight
 router.post('/flight/create', function(req, res) {
+  var flight = req.body.flight;
+  flight.cost = parseInt(flight.cost);
+  flight.seats_amount = parseInt(flight.seats_amount);
 // console.log("routes: flight/create1");
-  Flight.createFlight(req.body.flight, function(err, result) {
+  Flight.createFlight(flight, function(err, result) {
     if (!err) {
       console.log("routes: flight/create");
       response.success(res, { flight: result });

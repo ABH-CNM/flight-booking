@@ -64,6 +64,6 @@ module.exports = {
 }
 
 function generateAdminToken(user) {
-  var token = jwt.sign(user, config.secret, { expiresIn: '1h' });
+  var token = jwt.sign(user, config.secret, { expiresIn: '24h' });//oldValue = 1h
   return token;
 }

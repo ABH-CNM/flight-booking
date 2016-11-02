@@ -94,3 +94,8 @@ pre                             { margin-bottom:20px; }
   width: 500px;
 }
 
+.md-dialog{
+	width: 80%;
+	height: 80%
+}
+

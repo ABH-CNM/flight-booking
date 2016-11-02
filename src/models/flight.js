@@ -76,8 +76,10 @@ module.exports = {
       var db = database.getDb();
       db.collection(FLIGHT_COLLECTION).insertOne(flight_object, function(err, result) {
         if (!err) {
-          console.log('models: createFlight');
-          callback(null, result);
+          var cursor = db.collection(FLIGHT_COLLECTION).find(flight_object).limit(1);
+          cursor.next(function(err, flight) {
+            callback(null, flight);
+          });
         } else {
           callback(err);
         }        
